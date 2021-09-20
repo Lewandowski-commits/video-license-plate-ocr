@@ -66,12 +66,12 @@ def recognise_img_plate(img_path):
 
         reader = easyocr.Reader(['en'])
         result = reader.readtext(cropped_image)
-        return result[0][1], cropped_image
+        return result, cropped_image
     except cv2.error:
         return None, cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
 
-def vid_to_frames(vid_path: str, destination_path='frames'):
+def vid_to_frames(vid_path: str, destination_path='frames', frame_skip=1000):
     '''
     Takes in the path to a video file, and the name of the folder in the current dir where it the frames should be saved.
     Breaks videos into frames.
@@ -88,13 +88,14 @@ def vid_to_frames(vid_path: str, destination_path='frames'):
     while success:  # if there are further frames to be read, keep looping
         cv2.imwrite(f'{vid_folder_path}/{vid_name}{count}.png', image)  # save the frame
         success, image = vidcap.read()  # read the next frame & increment the counter
+        vidcap.set(cv2.CAP_PROP_POS_MSEC, (count * frame_skip))  # skip a certain amount of frames
         count += 1
 
     return vid_folder_path
 
 
-def recognise_vid_plates(vid_path: str, destination_path='frames'):
-    frames_path = vid_to_frames(vid_path, destination_path)
+def recognise_vid_plates(vid_path: str, destination_path='frames', frame_skip=1000):
+    frames_path = vid_to_frames(vid_path, destination_path, frame_skip)
     frames = [f for f in os.listdir(frames_path)]
     results = {}
     for frame in frames:
@@ -104,4 +105,6 @@ def recognise_vid_plates(vid_path: str, destination_path='frames'):
 
 
 if __name__ == '__main__':
-    pass
+    print(recognise_vid_plates("C:/Users/Michal/Desktop/license2.mp4"))
+    #show_img(recognise_img_plate('C:/Users/Michal/PycharmProjects/pythonProject1/frames/license/license263.png')[1])
+    #cv2.waitKey(0)
