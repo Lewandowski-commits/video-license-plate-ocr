@@ -24,7 +24,7 @@ def stage_path(input_path: str):
         return False
 
 
-def recognise_plate(img_path):
+def recognise_img_plate(img_path):
     img = cv2.imread(img_path)
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
