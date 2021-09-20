@@ -22,6 +22,7 @@ def stage_path(input_path: str):
     Takes a path and checks if it exists. If not, returns true and creates the dir.
     Otherwise, return false and do nothing.
     '''
+    input_path = clean_input_path(input_path)
     if not os.path.exists(input_path):
         os.mkdir(input_path)
         return True
