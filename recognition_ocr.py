@@ -11,6 +11,7 @@ def show_img(img):
     '''
     return cv2.imshow('Image', cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
 
+
 def stage_path(input_path: str):
     '''
     Takes a path and checks if it exists. If not, returns true and creates the dir.
@@ -21,6 +22,7 @@ def stage_path(input_path: str):
         return True
     else:
         return False
+
 
 def recognise_plate(img_path):
     img = cv2.imread(img_path)
