@@ -90,6 +90,18 @@ def vid_to_frames(vid_path: str, destination_path='frames'):
         success, image = vidcap.read()  # read the next frame & increment the counter
         count += 1
 
+    return vid_folder_path
+
+
+def recognise_vid_plates(vid_path: str, destination_path='frames'):
+    frames_path = vid_to_frames(vid_path, destination_path)
+    frames = [f for f in os.listdir(frames_path)]
+    results = {}
+    for frame in frames:
+        results[frame] = recognise_img_plate(os.path.join(frames_path, frame))[0]
+
+    return results
+
 
 if __name__ == '__main__':
     pass
