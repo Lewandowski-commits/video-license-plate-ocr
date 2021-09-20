@@ -11,6 +11,11 @@ def show_img(img):
     '''
     return cv2.imshow('Image', cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
 
+def clean_input_path(path: str):
+    '''
+    Ensures the input path/directory is properly formatted and returns the correct one.
+    '''
+    return path.replace('\\', '/').replace('\"', '')
 
 def stage_path(input_path: str):
     '''
@@ -84,7 +89,7 @@ def vid_to_frames(vid_path: str, destination_path='frames', frame_skip=1000):
     Breaks videos into frames.
     '''
     vid_name = vid_path.split('/')[-1].split('.')[0]  # get the video name
-    vid_folder_path = os.path.join(os.getcwd(), destination_path, vid_name)
+    vid_folder_path = os.path.join(destination_path, vid_name)
 
     stage_path(vid_folder_path)
 
@@ -114,4 +119,4 @@ def recognise_vid_plates(vid_path: str, destination_path='frames', frame_skip=10
 
 
 if __name__ == '__main__':
-    print(recognise_vid_plates(input('Please provide a video path: ')).replace('\\', '/').replace('\"', ''))
+    print(recognise_vid_plates(input('Please provide a video path: ')))
