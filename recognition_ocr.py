@@ -63,9 +63,8 @@ def vid_to_frames(vid_path: str, destination_path='frames'):
     success, image = vidcap.read()  # read the video
 
     while success:
-        cv2.imwrite(f'{destination_path}/{vid_name}{count}.jpg', image)
+        cv2.imwrite(f'{destination_path}/{vid_name}{count}.png', image)
         success, image = vidcap.read()
-        print('Read a new frame: ', success)
         count += 1
 
 
