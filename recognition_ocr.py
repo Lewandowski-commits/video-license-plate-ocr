@@ -2,11 +2,22 @@ import cv2
 import imutils
 import easyocr
 import numpy as np
+import os
 
 
 def show_img(img):
     return cv2.imshow('Image', cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
 
+def stage_path(input_path: str):
+    '''
+    Takes a path and checks if it exists. If not, returns true and creates the dir.
+    Otherwise, return false and do nothing.
+    '''
+    if not os.path.exists(input_path):
+        os.mkdir(input_path)
+        return True
+    else:
+        return False
 
 def recognise_plate(img_path):
     img = cv2.imread(img_path)
