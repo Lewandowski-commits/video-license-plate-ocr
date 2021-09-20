@@ -105,6 +105,4 @@ def recognise_vid_plates(vid_path: str, destination_path='frames', frame_skip=10
 
 
 if __name__ == '__main__':
-    print(recognise_vid_plates("C:/Users/Michal/Desktop/license2.mp4"))
-    #show_img(recognise_img_plate('C:/Users/Michal/PycharmProjects/pythonProject1/frames/license/license263.png')[1])
-    #cv2.waitKey(0)
+    print(recognise_vid_plates(input('Please provide a video path: ')).replace('\\', '/').replace('\"', ''))
