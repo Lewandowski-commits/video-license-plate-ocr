@@ -6,6 +6,9 @@ import os
 
 
 def show_img(img):
+    '''
+    Takes in an image and shows it to the user.
+    '''
     return cv2.imshow('Image', cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
 
 def stage_path(input_path: str):
@@ -67,6 +70,10 @@ def recognise_plate(img_path):
 
 
 def vid_to_frames(vid_path: str, destination_path='frames'):
+    '''
+    Takes in the path to a video file, and the name of the folder in the current dir where it the frames should be saved.
+    Breaks videos into frames.
+    '''
     vid_name = vid_path.split('/')[-1].split('.')[0]  # get the video name
     vid_folder_path = os.path.join(os.getcwd(), destination_path, vid_name)
 
