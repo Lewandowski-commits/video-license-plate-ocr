@@ -66,9 +66,16 @@ def recognise_img_plate(img_path):
 
         reader = easyocr.Reader(['en'])
         result = reader.readtext(cropped_image)
-        return result, cropped_image
+        label = result[0][1]
+
+        colour = [0, 255, 0]
+
+        img_annotated = cv2.rectangle(img, (y1, x1), (y2, x2), colour, 2)
+        img_annotated = cv2.putText(img, label, (y1, x1-5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, [0, 255, 0], 1)
+
+        return label, cropped_image, img_annotated
     except cv2.error:
-        return None, cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        return False
 
 
 def vid_to_frames(vid_path: str, destination_path='frames', frame_skip=1000):
@@ -99,7 +106,9 @@ def recognise_vid_plates(vid_path: str, destination_path='frames', frame_skip=10
     frames = [f for f in os.listdir(frames_path)]
     results = {}
     for frame in frames:
-        results[frame] = recognise_img_plate(os.path.join(frames_path, frame))[0]
+        result = recognise_img_plate(os.path.join(frames_path, frame))
+        results[frame] = result[0]
+        cv2.imwrite(os.path.join(frames_path, frame), result[-1])
 
     return results
 
