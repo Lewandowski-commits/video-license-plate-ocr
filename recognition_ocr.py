@@ -89,8 +89,10 @@ def vid_to_frames(vid_path: str, destination_path='frames', frame_skip=1000):
     Takes in the path to a video file, and the name of the folder in the current dir where it the frames should be saved.
     Breaks videos into frames.
     '''
+    vid_path = clean_input_path(vid_path)
+
     vid_name = vid_path.split('/')[-1].split('.')[0]  # get the video name
-    vid_folder_path = os.path.join(destination_path, vid_name)
+    vid_folder_path = os.path.join(os.getcwd(), destination_path, vid_name)
 
     stage_path(vid_folder_path)
 
