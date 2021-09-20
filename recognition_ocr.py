@@ -35,26 +35,29 @@ def recognise_plate(img_path):
             break
 
     mask = np.zeros(gray.shape, np.uint8)
-    new_image = cv2.drawContours(mask,
-                                 [location],
-                                 0,
-                                 255,
-                                 -1)
-    new_image = cv2.bitwise_and(img, img, mask=mask)
+    try:
+        new_image = cv2.drawContours(mask,
+                                     [location],
+                                     0,
+                                     255,
+                                     -1)
+        new_image = cv2.bitwise_and(img, img, mask=mask)
 
-    (x, y) = np.where(mask == 255)
-    (x1, y1) = (np.min(x), np.min(y))
-    (x2, y2) = (np.max(x), np.max(y))
+        (x, y) = np.where(mask == 255)
+        (x1, y1) = (np.min(x), np.min(y))
+        (x2, y2) = (np.max(x), np.max(y))
 
-    cropped_image = gray[x1:x2 + 1, y1:y2 + 1]
+        cropped_image = gray[x1:x2 + 1, y1:y2 + 1]
 
-    reader = easyocr.Reader(['en'])
-    result = reader.readtext(cropped_image)
-    return result[0][1], cropped_image
+        reader = easyocr.Reader(['en'])
+        result = reader.readtext(cropped_image)
+        return result[0][1], cropped_image
+    except cv2.error:
+        return None, cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
 if __name__ == '__main__':
     results = recognise_plate(
-        input('Please provide the image path: ')
+        input('Please provide the image path: ').replace('\\', '/').replace('\"', '')
     )
     print(f'Plate number is: {results[0]}')
     show_img(results[1])
