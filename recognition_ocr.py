@@ -92,6 +92,4 @@ def vid_to_frames(vid_path: str, destination_path='frames'):
 
 
 if __name__ == '__main__':
-    vid_to_frames(
-        input('Please provide the video path: ').replace('\\', '/').replace('\"', '')
-    )
+    pass
