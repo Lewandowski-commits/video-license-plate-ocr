@@ -1,5 +1,4 @@
 import cv2
-from matplotlib import pyplot as plt
 import imutils
 import easyocr
 import numpy as np
@@ -55,11 +54,22 @@ def recognise_plate(img_path):
     except cv2.error:
         return None, cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
+
+def vid_to_frames(vid_path: str, destination_path='frames'):
+    vid_name = vid_path.split('/')[-1].split('.')[0]
+
+    vidcap = cv2.VideoCapture(vid_path)
+    count = 0
+    success, image = vidcap.read()  # read the video
+
+    while success:
+        cv2.imwrite(f'{destination_path}/{vid_name}{count}.jpg', image)
+        success, image = vidcap.read()
+        print('Read a new frame: ', success)
+        count += 1
+
+
 if __name__ == '__main__':
-    results = recognise_plate(
-        input('Please provide the image path: ').replace('\\', '/').replace('\"', '')
+    vid_to_frames(
+        input('Please provide the video path: ').replace('\\', '/').replace('\"', '')
     )
-    print(f'Plate number is: {results[0]}')
-    show_img(results[1])
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
