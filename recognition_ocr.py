@@ -56,15 +56,15 @@ def recognise_plate(img_path):
 
 
 def vid_to_frames(vid_path: str, destination_path='frames'):
-    vid_name = vid_path.split('/')[-1].split('.')[0]
+    vid_name = vid_path.split('/')[-1].split('.')[0]  # get the video name
 
     vidcap = cv2.VideoCapture(vid_path)
     count = 0
-    success, image = vidcap.read()  # read the video
+    success, image = vidcap.read()  # read the first video frame
 
-    while success:
-        cv2.imwrite(f'{destination_path}/{vid_name}{count}.png', image)
-        success, image = vidcap.read()
+    while success:  # if there are further frames to be read, keep looping
+        cv2.imwrite(f'{destination_path}/{vid_name}{count}.png', image)  # save the frame
+        success, image = vidcap.read()  # read the next frame & increment the counter
         count += 1
 
 
