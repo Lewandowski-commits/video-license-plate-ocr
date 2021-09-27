@@ -81,8 +81,8 @@ def recognise_img_plate(img_path):
         img_annotated = cv2.putText(img, label, (y1, x1-5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, [0, 255, 0], 1)
 
         return label, cropped_image, img_annotated
-    except (cv2.error, IndexError):
-        return None, None, None
+    except (cv2.error, IndexError) as e:
+        return e, None, None
 
 
 def vid_to_frames(vid_path: str, destination_path='frames', frame_skip=1000):
